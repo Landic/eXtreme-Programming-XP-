@@ -1,0 +1,112 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{56920FDB-8C62-44C0-B8E3-A8497BED1F00}|Test\\Test.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\test\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56920FDB-8C62-44C0-B8E3-A8497BED1F00}|Test\\Test.csproj|solutionrelative:test\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\app\\romannumber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|solutionrelative:app\\romannumber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56920FDB-8C62-44C0-B8E3-A8497BED1F00}|Test\\Test.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\test\\test.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{56920FDB-8C62-44C0-B8E3-A8497BED1F00}|Test\\Test.csproj|solutionrelative:test\\test.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|solutionrelative:app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\app\\notes\\notes.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|solutionrelative:app\\notes\\notes.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Test.csproj",
+              "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\Test.csproj",
+              "RelativeDocumentMoniker": "Test\\Test.csproj",
+              "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\Test.csproj",
+              "RelativeToolTip": "Test\\Test.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-09-02T21:30:46.2Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "Test\\UnitTest1.cs",
+              "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\UnitTest1.cs",
+              "RelativeToolTip": "Test\\UnitTest1.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-02T07:51:45.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "notes.txt",
+              "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\Notes\\notes.txt",
+              "RelativeDocumentMoniker": "App\\Notes\\notes.txt",
+              "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\Notes\\notes.txt",
+              "RelativeToolTip": "App\\Notes\\notes.txt",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-09-02T06:14:48.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\Program.cs",
+              "RelativeDocumentMoniker": "App\\Program.cs",
+              "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\Program.cs",
+              "RelativeToolTip": "App\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-02T06:13:39.079Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RomanNumber.cs",
+              "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\RomanNumber.cs",
+              "RelativeDocumentMoniker": "App\\RomanNumber.cs",
+              "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\RomanNumber.cs",
+              "RelativeToolTip": "App\\RomanNumber.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAuwCAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-02T08:17:01.694Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
