@@ -11,10 +11,6 @@
       "RelativeMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|solutionrelative:app\\romannumber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56920FDB-8C62-44C0-B8E3-A8497BED1F00}|Test\\Test.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\test\\test.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{56920FDB-8C62-44C0-B8E3-A8497BED1F00}|Test\\Test.csproj|solutionrelative:test\\test.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|d:\\projects\\extreme programming\\homework\\extreme-programming-xp-\\pm-213\\app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BD707497-5BA8-4EE3-BD42-746FF8A16E17}|App\\App.csproj|solutionrelative:app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -44,22 +40,10 @@
               "RelativeDocumentMoniker": "App\\RomanNumber.cs",
               "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\RomanNumber.cs",
               "RelativeToolTip": "App\\RomanNumber.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAAwEIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACIAAAAAAAAAAAAAwCcAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-03T20:58:53.277Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Test.csproj",
-              "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\Test.csproj",
-              "RelativeDocumentMoniker": "Test\\Test.csproj",
-              "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\Test.csproj",
-              "RelativeToolTip": "Test\\Test.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-09-02T21:30:46.2Z"
             },
             {
               "$type": "Document",
@@ -69,14 +53,14 @@
               "RelativeDocumentMoniker": "Test\\RomanNumberTest.cs",
               "ToolTip": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\Test\\RomanNumberTest.cs",
               "RelativeToolTip": "Test\\RomanNumberTest.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAYwH4AAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAADQAAAAAAAAAAAAmwG4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-02T07:51:45.48Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "notes.txt",
               "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\Notes\\notes.txt",
               "RelativeDocumentMoniker": "App\\Notes\\notes.txt",
@@ -88,7 +72,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Projects\\Extreme programming\\Homework\\eXtreme-Programming-XP-\\PM-213\\App\\Program.cs",
               "RelativeDocumentMoniker": "App\\Program.cs",

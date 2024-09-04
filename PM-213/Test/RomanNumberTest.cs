@@ -109,6 +109,11 @@ namespace Test
                 Assert.IsNotNull(rn);
                 Assert.AreEqual(test.Value, rn.Value, $"{test.Key} -> {test.Value}");
             }
+
+
+            Dictionary<String, Object[]> exTestCases = new();
+            var ex = Assert.ThrowsException<FormatException>(() => RomanNumber.Parse("W"), "Parse 'W' must throw FormatException");
+            Assert.IsTrue(ex.Message.Contains("Invalid symbol 'W' in position 0"), "FormatException must containt data about symbol and its position");
         }
 
         [TestMethod]
@@ -153,6 +158,29 @@ namespace Test
             {
                 Assert.AreEqual(test.Value, RomanNumber.DigitalValue(test.Key), $"{test.Key} -> {test.Value}");
             }
+            Random rand = new();
+            for(int i =0; i < 100; ++i)
+            {
+                String invalidDigit = ((char)rand.Next(256)).ToString();
+                if (testCases.ContainsKey(invalidDigit))
+                {
+                    --i;
+                    continue;
+                }
+                ArgumentException ex = Assert.ThrowsException<ArgumentException>(
+                () => RomanNumber.DigitalValue(""),
+                "Empty string -> ArgumentException"
+                );
+                // виманатимемо від винятку
+                // - повідомлення, що
+                // = не є порожнім
+                // = містить назву аргументу (digit)
+                // = містить значення аргументу, що призвело до винятку
+                Assert.IsFalse(String.IsNullOrEmpty(ex.Message), "ArgemntException must have a message");
+                Assert.IsTrue(ex.Message.Contains($"'digit' has invalid value '{invalidDigit}'"), $"ArgemntException message must contain <'digit' has invalid value '{invalidDigit}'>");
+                Assert.IsTrue(ex.Message.Contains(nameof(RomanNumber)) && ex.Message.Contains(nameof(RomanNumber.DigitalValue)), "ArgemntException message must contain 'digit'");
+            }
+            
         }
     }
 }

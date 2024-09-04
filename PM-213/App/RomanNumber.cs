@@ -42,9 +42,19 @@ namespace App
             //}
             int value = 0;
             int prevDigit = 0;
+            int pos = input.Length - 1;
             foreach (char c in input.Reverse())
             {
-                int digit = DigitalValue(c.ToString());
+                pos -= 1;
+                int digit;
+                try 
+                { 
+                    digit = DigitalValue(c.ToString()); 
+                }
+                catch 
+                { 
+                    throw new FormatException($"Invalid symbol '{c}' in position {pos}"); 
+                }
                 value += digit >= prevDigit ? digit : -digit;
                 prevDigit = digit;
             }
@@ -60,7 +70,9 @@ namespace App
             "L" => 50,
             "C" => 100,
             "D" => 500,
-            _ => 1000
+            "M" => 1000,
+            "W" => 5000,
+            _ => throw new ArgumentException($"{nameof(RomanNumber)} :: {nameof(DigitalValue)}: 'digit' has invalid value '{digit}'")
         };
     }
 }
