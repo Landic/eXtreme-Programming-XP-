@@ -83,10 +83,10 @@ namespace Test
                 {"XX", 20},
                 {"XXX", 30},
                 {"XL", 40},
-                {"XXXX", 40}, 
+                {"XXXX", 40},
                 {"L", 50},
                 {"LX", 60},
-                {"LXXXX", 90}, 
+                {"LXXXX", 90},
                 {"XC", 90},
                 {"C", 100},
                 {"CC", 200},
@@ -101,7 +101,7 @@ namespace Test
                 {"MCM", 1900},
                 {"MM", 2000},
                 {"MMM", 3000},
-                {"MMMM", 4000} 
+                {"MMMM", 4000}
             };
             foreach (var test in romanMap)
             {
@@ -111,9 +111,33 @@ namespace Test
             }
 
 
-            Dictionary<String, Object[]> exTestCases = new();
-            var ex = Assert.ThrowsException<FormatException>(() => RomanNumber.Parse("W"), "Parse 'W' must throw FormatException");
-            Assert.IsTrue(ex.Message.Contains("Invalid symbol 'W' in position 0"), "FormatException must containt data about symbol and its position");
+            Dictionary<string, (char, int)[]> exTestCases = new()
+            {
+                {"W", new[] {('W', 0)}},
+                {"Q", new[] {('Q', 0)}},
+                {"s", new[] {('s', 0)}},
+                {"Xd", new[] {('d', 1)}},
+                {"SWXF", new[] { ('S', 0), ('W', 1), ('F', 3) }},
+                {"AIXL", new[] { ('A', 0) }},
+                {"MMQ", new[] { ('Q', 2) }},
+                {"XDDX", new[] { ('D', 1), ('D', 2) }},
+                {"YIYV", new[] { ('Y', 0), ('Y', 2) }},
+            };
+            foreach (var testCase in exTestCases)
+            {
+                var ex = Assert.ThrowsException<FormatException>(
+                    () => RomanNumber.Parse(testCase.Key),
+                    $"{nameof(FormatException)} Parse '{testCase.Key}' must throw"
+                );
+                foreach (var (symbol, position) in testCase.Value)
+                {
+                    Assert.IsTrue(ex.Message.Contains($"Invalid symbol '{symbol}' in position {position}"),
+                        $"{nameof(FormatException)} must contain data about symbol '{symbol}' at position {position}. " +
+                        $"TestCase: '{testCase.Key}', ex.Message: '{ex.Message}'"
+                    );
+                }
+            }
+
         }
 
         [TestMethod]
@@ -121,18 +145,17 @@ namespace Test
         {
             string[] invalidTestCases =
             {
-                "IIIIII",  
-                "VV",      
-                "LL",      
-                "DD",      
-                "MMMMM",  
-                "IC",   
-                "IM",   
-                "XD",    
-                "IL",   
-                ""    
+                "IIIIII",
+                "VV",
+                "LL",
+                "DD",
+                "MMMMM",
+                "IC",
+                "IM",
+                "XD",
+                "IL",
+                ""
             };
-
             foreach (var invalidCase in invalidTestCases)
             {
                 Assert.ThrowsException<ArgumentException>(() => RomanNumber.Parse(invalidCase), $"Expected exception for {invalidCase}");
@@ -159,28 +182,38 @@ namespace Test
                 Assert.AreEqual(test.Value, RomanNumber.DigitalValue(test.Key), $"{test.Key} -> {test.Value}");
             }
             Random rand = new();
-            for(int i =0; i < 100; ++i)
+            for (int i = 0; i < 100; i++)
             {
                 String invalidDigit = ((char)rand.Next(256)).ToString();
                 if (testCases.ContainsKey(invalidDigit))
                 {
-                    --i;
+                    i--;
                     continue;
                 }
                 ArgumentException ex = Assert.ThrowsException<ArgumentException>(
-                () => RomanNumber.DigitalValue(""),
-                "Empty string -> ArgumentException"
-                );
+                () => RomanNumber.DigitalValue(invalidDigit),
+                $"ArgumentException erxpected for digit = '{invalidDigit}'"
+                 );
                 // виманатимемо від винятку
                 // - повідомлення, що
                 // = не є порожнім
                 // = містить назву аргументу (digit)
                 // = містить значення аргументу, що призвело до винятку
-                Assert.IsFalse(String.IsNullOrEmpty(ex.Message), "ArgemntException must have a message");
-                Assert.IsTrue(ex.Message.Contains($"'digit' has invalid value '{invalidDigit}'"), $"ArgemntException message must contain <'digit' has invalid value '{invalidDigit}'>");
-                Assert.IsTrue(ex.Message.Contains(nameof(RomanNumber)) && ex.Message.Contains(nameof(RomanNumber.DigitalValue)), "ArgemntException message must contain 'digit'");
+                Assert.IsFalse(
+                     String.IsNullOrEmpty(ex.Message),
+                     "ArgumentException must have a message"
+                     );
+                Assert.IsTrue(
+                    ex.Message.Contains($"'digit' has invalid value '{invalidDigit}'"),
+                    $"ArgumentException message must contain <'digit' has invalid value '{invalidDigit}'>"
+                    );
+                Assert.IsTrue(
+                    ex.Message.Contains(nameof(RomanNumber)) &&
+                    ex.Message.Contains(nameof(RomanNumber.DigitalValue)),
+                    $"ArgumentException message must contain '{nameof(RomanNumber)}' and '{nameof(RomanNumber.DigitalValue)}'"
+                    );
             }
-            
+
         }
     }
 }
