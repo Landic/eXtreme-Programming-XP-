@@ -1,8 +1,4 @@
 using App;
-<<<<<<< HEAD
-=======
-using static System.Net.Mime.MediaTypeNames;
->>>>>>> 404ef92fda15df64a0360b7a851eae49b9480cd9
 
 namespace Test
 {
@@ -68,7 +64,7 @@ namespace Test
                 {"I", 1 },
                 {"II", 2 },
                 {"III", 3},
-                {"IIII", 4}, // цим ми дозволяємо, неоптимальну форму числа
+                {"IIII", 4}, // Г¶ГЁГ¬ Г¬ГЁ Г¤Г®Г§ГўГ®Г«ГїВєГ¬Г®, Г­ГҐГ®ГЇГІГЁГ¬Г Г«ГјГ­Гі ГґГ®Г°Г¬Гі Г·ГЁГ±Г«Г 
                 {"IV", 4 },
                 {"VI", 6},
                 {"VII", 7},
@@ -231,11 +227,11 @@ namespace Test
                 () => RomanNumber.DigitalValue(invalidDigit),
                 $"ArgumentException erxpected for digit = '{invalidDigit}'"
                  );
-                // виманатимемо від винятку
-                // - повідомлення, що
-                // = не є порожнім
-                // = містить назву аргументу (digit)
-                // = містить значення аргументу, що призвело до винятку
+                // ГўГЁГ¬Г Г­Г ГІГЁГ¬ГҐГ¬Г® ГўВіГ¤ ГўГЁГ­ГїГІГЄГі
+                // - ГЇГ®ГўВіГ¤Г®Г¬Г«ГҐГ­Г­Гї, Г№Г®
+                // = Г­ГҐ Вє ГЇГ®Г°Г®Г¦Г­ВіГ¬
+                // = Г¬ВіГ±ГІГЁГІГј Г­Г Г§ГўГі Г Г°ГЈГіГ¬ГҐГ­ГІГі (digit)
+                // = Г¬ВіГ±ГІГЁГІГј Г§Г­Г Г·ГҐГ­Г­Гї Г Г°ГЈГіГ¬ГҐГ­ГІГі, Г№Г® ГЇГ°ГЁГ§ГўГҐГ«Г® Г¤Г® ГўГЁГ­ГїГІГЄГі
                 Assert.IsFalse(
                      String.IsNullOrEmpty(ex.Message),
                      "ArgumentException must have a message"
