@@ -9,7 +9,7 @@ namespace App
 {
     public record RomanNumber(int value)
     {
-        private readonly int _value = value;
+        private readonly int _value = value; // Refactoring
 
         public int Value => _value;
 
@@ -21,37 +21,6 @@ namespace App
             //{
             //    return new RomanNumber(0);
             //}
-<<<<<<< HEAD
-
-            //Dictionary<char,int> romanMap = new Dictionary<char, int>
-            //{
-            //    {'I', 1},
-            //    {'V', 5},
-            //    {'X', 10},
-            //    {'L', 50},
-            //    {'C', 100},
-            //    {'D', 500},
-            //    {'M', 1000}
-            //};
-
-            //if (romanMap.TryGetValue(input[0], out int value))
-            //{
-            //    return new RomanNumber(value);
-            //}
-            //else
-            //{
-            //    throw new ArgumentException("Invalid Roman number!");
-            //}
-            int value = 0;
-            int prevDigit = 0;
-            foreach(char c in input.Reverse())
-            {
-                int digit = DigitalValue(c.ToString());
-                value += digit >= prevDigit ? digit : -digit;
-                prevDigit = digit;
-            }
-            return new(value);
-=======
 
             //Dictionary<char,int> romanMap = new Dictionary<char, int>
             //{
@@ -86,20 +55,27 @@ namespace App
                 }
                 catch
                 {
-                    errors.Add($"Invalid symbol '{c}' in position {pos}");
-                    continue;
+                    throw new FormatException($"Invalid symbol '{c}' in position {pos}");
                 }
+
+                if (digit != 0 && prevDigit / digit > 10)
+                {
+                    throw new FormatException($"Invalid order '{c}' before '{input[pos + 1]}' in position {pos}");
+                }
+
+                if (prevDigit > digit &&
+                    !((digit == 1 && (prevDigit == 5 || prevDigit == 10)) ||
+                     (digit == 10 && (prevDigit == 50 || prevDigit == 100)) ||
+                     (digit == 100 && (prevDigit == 500 || prevDigit == 1000))))
+                {
+                    throw new FormatException($"Invalid combination of '{c}' in position {pos}");
+                }
+
                 value += digit >= prevDigit ? digit : -digit;
                 prevDigit = digit;
             }
 
-            if (errors.Any())
-            {
-                throw new FormatException(string.Join("; ", errors));
-            }
-
             return new RomanNumber(value);
->>>>>>> 404ef92fda15df64a0360b7a851eae49b9480cd9
         }
 
         public static int DigitalValue(String digit) => digit switch
@@ -111,15 +87,40 @@ namespace App
             "L" => 50,
             "C" => 100,
             "D" => 500,
-<<<<<<< HEAD
-            _ => 1000
-        };
-       
-=======
             "M" => 1000,
-            "W" => 5000,
-            _ => throw new ArgumentException($" {nameof(RomanNumber)} : {nameof(DigitalValue)}'digit' has invalid value '{digit}'")
+            _ => throw new ArgumentException($"{nameof(RomanNumber)}::{nameof(DigitalValue)}: 'digit' has invalid value '{digit}'")
         };
->>>>>>> 404ef92fda15df64a0360b7a851eae49b9480cd9
+
+        public override string? ToString()
+        {
+            if (_value == 0) return "N";
+            Dictionary<int, String> parts = new()
+            {
+                {1000, "M"},
+                {900, "CM" },
+                {500, "D"},
+                {400, "CD" },
+                {100, "C"},
+                {90, "XC" },
+                {50, "L"},
+                {40, "XL"},
+                {10, "X"},
+                {9,"IX" },
+                {5, "V"},
+                {4, "IV"},
+                {1, "I"}
+            };
+            int v = _value;
+            StringBuilder sb = new();
+            foreach (var part in parts)
+            {
+                while (v >= part.Key)
+                {
+                    v -= part.Key;
+                    sb.Append(part.Value);
+                }
+            }
+            return sb.ToString();
+        }
     }
 }

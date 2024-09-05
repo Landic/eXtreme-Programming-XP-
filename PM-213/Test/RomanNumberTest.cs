@@ -5,6 +5,18 @@ namespace Test
     [TestClass]
     public class RomanNumberTest
     {
+        private readonly Dictionary<String, int> _digitValues = new()
+        {
+                {"N", 0},
+                {"I", 1 },
+                {"V", 5 },
+                {"X", 10},
+                {"L", 50},
+                {"C", 100 },
+                {"D", 500 },
+                {"M", 1000}
+         };
+
         //[TestMethod]
         //public void TestParseI()
         //{
@@ -57,28 +69,6 @@ namespace Test
         [TestMethod]
         public void ParseTest()
         {
-<<<<<<< HEAD
-            Dictionary<String, int> testCases = new()
-            {
-                {"N", 0},
-                {"I", 1 },
-                {"II", 2 },
-                {"III", 3},
-                {"IIII", 4}, // öèì ìè äîçâîëÿºìî, íåîïòèìàëüíó ôîðìó ÷èñëà
-                {"IV", 4 },
-                {"VI", 6},
-                {"VII", 7},
-                {"IX", 9},
-                {"C", 100 },
-                {"D", 500 },
-                {"CM", 900 },
-                {"M", 1000},
-                {"MC", 1100 },
-                {"MCM", 1900 },
-                {"MM", 2000 }
-            };
-            foreach (var test in testCases)
-=======
             Dictionary<String, int> romanMap = new()
             {
                 {"N", 0},
@@ -125,17 +115,11 @@ namespace Test
                 {"MMMM", 4000}
             };
             foreach (var test in romanMap)
->>>>>>> 404ef92fda15df64a0360b7a851eae49b9480cd9
             {
                 RomanNumber rn = RomanNumber.Parse(test.Key);
                 Assert.IsNotNull(rn);
                 Assert.AreEqual(test.Value, rn.Value, $"{test.Key} -> {test.Value}");
             }
-<<<<<<< HEAD
-        }
-
-        [TestMethod]
-=======
 
 
             Dictionary<string, (char, int)[]> exTestCases = new()
@@ -164,6 +148,31 @@ namespace Test
                     );
                 }
             }
+            Dictionary<String, Object[]> invalidOrderTestCases = new()
+            {
+                { "IM",  ['I', 'M', 0] },
+                { "XIM", ['I', 'M', 1] },
+                { "IMX", ['I', 'M', 0] },
+                { "XMD", ['X', 'M', 0] },
+                { "XID", ['I', 'D', 1] },
+                { "ID", ['I', 'D', 0] },
+                { "VX", ['V', 'X', 0] },
+                { "LC", ['L', 'C', 0] },
+                { "VV", ['V', 'V', 0] },
+                { "LL", ['L', 'L', 0] }
+            };
+
+            foreach (var testCase in invalidOrderTestCases)
+            {
+                var ex = Assert.ThrowsException<FormatException>(
+                    () => RomanNumber.Parse(testCase.Key),
+                    $"{nameof(FormatException)} Parse '{testCase.Key}' must throw"
+                );
+                Assert.IsTrue(
+                    ex.Message.Contains($"Invalid order '{testCase.Value[0]}' before '{testCase.Value[1]}' in position {testCase.Value[2]}"),
+                    $"FormatException must contain data about mis-ordered symbols. TestCase: '{testCase.Key}', ex.Message: '{ex.Message}'"
+                );
+            }
 
         }
 
@@ -191,34 +200,17 @@ namespace Test
 
 
         [TestMethod]
->>>>>>> 404ef92fda15df64a0360b7a851eae49b9480cd9
         public void DigitalValueTest()
         {
-            Dictionary<String, int> testCases = new()
-            {
-                {"N", 0},
-                {"I", 1 },
-                {"V", 5 },
-                {"X", 10},
-                {"L", 50},
-                {"C", 100 },
-                {"D", 500 },
-                {"M", 1000}
-            };
-            foreach (var test in testCases)
+            foreach (var test in _digitValues)
             {
                 Assert.AreEqual(test.Value, RomanNumber.DigitalValue(test.Key), $"{test.Key} -> {test.Value}");
             }
-<<<<<<< HEAD
-        }
-    }
-}
-=======
             Random rand = new();
             for (int i = 0; i < 100; i++)
             {
                 String invalidDigit = ((char)rand.Next(256)).ToString();
-                if (testCases.ContainsKey(invalidDigit))
+                if (_digitValues.ContainsKey(invalidDigit))
                 {
                     i--;
                     continue;
@@ -227,11 +219,11 @@ namespace Test
                 () => RomanNumber.DigitalValue(invalidDigit),
                 $"ArgumentException erxpected for digit = '{invalidDigit}'"
                  );
-                // âèìàíàòèìåìî â³ä âèíÿòêó
-                // - ïîâ³äîìëåííÿ, ùî
-                // = íå º ïîðîæí³ì
-                // = ì³ñòèòü íàçâó àðãóìåíòó (digit)
-                // = ì³ñòèòü çíà÷åííÿ àðãóìåíòó, ùî ïðèçâåëî äî âèíÿòêó
+                // виманатимемо від винятку
+                // - повідомлення, що
+                // = не є порожнім
+                // = містить назву аргументу (digit)
+                // = містить значення аргументу, що призвело до винятку
                 Assert.IsFalse(
                      String.IsNullOrEmpty(ex.Message),
                      "ArgumentException must have a message"
@@ -248,6 +240,30 @@ namespace Test
             }
 
         }
+
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            Dictionary<int, String> testCases = new()
+            {
+                {2, "II"},
+                {3343, "MMMCCCXLIII"},
+                {4, "IV" },
+                {44, "XLIV" },
+                {9,"IX" },
+                {90, "XC" },
+                {1400, "MCD" },
+                {999, "CMXCIX" },
+                {444, "CDXLIV" },
+                {990, "CMXC" }
+
+            };
+            _digitValues.Keys.ToList().ForEach(i => testCases.Add(_digitValues[i], i));
+            foreach (var test in testCases)
+            {
+                Assert.AreEqual(test.Value, new RomanNumber(test.Key).ToString(), $"ToString({test.Key}) --> {test.Value}");
+            }
+        }
     }
 }
->>>>>>> 404ef92fda15df64a0360b7a851eae49b9480cd9
