@@ -265,5 +265,36 @@ namespace Test
                 Assert.AreEqual(test.Value, new RomanNumber(test.Key).ToString(), $"ToString({test.Key}) --> {test.Value}");
             }
         }
+
+        [TestMethod]
+        public void PlusTest()
+        {
+            RomanNumber rn1 = new(1);
+            RomanNumber rn2 = new(2);
+            RomanNumber rn3 = rn1.Plus(rn2);
+            Assert.IsNotNull(rn3);
+            Assert.IsInstanceOfType(rn3, typeof(RomanNumber), "Plus result must have RomanNumber type");
+            Assert.AreNotSame(rn3, rn1, "Plus result is new instance, neither (v)first, not second arg");
+            Assert.AreNotSame(rn3, rn2, "Plus result is new instance, neither first, not (v)second arg");
+            Assert.AreEqual(rn1.Value + rn2.Value, rn3.Value, "Plus arithmetic");
+            var testCases = new[]
+            {
+                (first: "IV", second: "VI", expected: "X"),   
+                (first: "X", second: "V", expected: "XV"),    
+                (first: "XL", second: "IX", expected: "XLIX"),
+                (first: "L", second: "L", expected: "C"), 
+                (first: "C", second: "D", expected: "DC"), 
+                (first: "MMM", second: "MMM", expected: "MMMMMM") 
+            };
+
+            foreach (var testCase in testCases)
+            {
+                rn1 = RomanNumber.Parse(testCase.first);
+                rn2 = RomanNumber.Parse(testCase.second);
+                rn3 = rn1.Plus(rn2);
+
+                Assert.AreEqual(testCase.expected, rn3.ToString(), $"Expected {testCase.first} + {testCase.second} = {testCase.expected}, but got {rn3}");
+            }
+        }
     }
 }

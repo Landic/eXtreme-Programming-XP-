@@ -11,7 +11,7 @@ namespace App
     {
         private readonly int _value = value; // Refactoring
 
-        public int Value => _value;
+        public int Value { get => _value; init { _value = value; } }
 
         public static RomanNumber Parse(string input)
         {
@@ -90,6 +90,11 @@ namespace App
             "M" => 1000,
             _ => throw new ArgumentException($"{nameof(RomanNumber)}::{nameof(DigitalValue)}: 'digit' has invalid value '{digit}'")
         };
+
+        public RomanNumber Plus(RomanNumber other)
+        {
+            return this with { Value = Value + other.Value };
+        }
 
         public override string? ToString()
         {
