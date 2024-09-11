@@ -1,4 +1,6 @@
 # eXtreme-Programming-XP-
+![image](https://github.com/user-attachments/assets/1d8ccada-6e53-4cbf-93c3-f9168af93ee0)
+
 ![Снимок экрана 2024-09-10 142222](https://github.com/user-attachments/assets/4a7ce77d-bb95-4e95-834f-a2ff69acdf54)
 
 
