@@ -1,4 +1,5 @@
 using App;
+using System.Reflection;
 
 namespace Test
 {
@@ -16,6 +17,132 @@ namespace Test
                 {"D", 500 },
                 {"M", 1000}
          };
+
+        [TestMethod]
+        public void _CheckSubsTest()
+        {
+            Type? rnType = typeof(RomanNumber);
+            MethodInfo? m1Info = rnType.GetMethod("_CheckSubs",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            string[] validCases = { "IV", "IX", "XL", "XC", "CD", "CM", "MCMXCIV" };
+            foreach (var validCase in validCases)
+            {
+                m1Info?.Invoke(null, [validCase]);
+            }
+            string[] invalidCases = { "IIV", "IIX", "XXL", "XXC", "CCD", "CCM", "IIVX", "IIXX", "IVIV", "IXIX" };
+            foreach (var invalidCase in invalidCases)
+            {
+                var ex = Assert.ThrowsException<TargetInvocationException>(
+                    () => m1Info?.Invoke(null, [invalidCase]),
+                    $"_CheckSubs '{invalidCase}' must throw FormatException"
+                );
+                Assert.IsInstanceOfType<FormatException>(
+                    ex.InnerException,
+                    "_CheckSubs: FormatException from InnerException"
+                );
+            }
+        }
+
+        [TestMethod]
+        public void _CheckSymbolsTest()
+        {
+            Type? rnType = typeof(RomanNumber);
+            MethodInfo? m1Info = rnType.GetMethod("_CheckSymbols",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            string[] validCases = { "I", "V", "X", "L", "C", "D", "M", "MCMLIV", "MMXXIII" };
+            foreach (var validCase in validCases)
+            {
+                m1Info?.Invoke(null, [validCase]);
+            }
+            string[] invalidCases = { "A", "E", "K", "O", "P", "R", "S", "T", "U", "W", "Y", "Z", "MCMLIVA", "MM23" };
+            foreach (var invalidCase in invalidCases)
+            {
+                var ex = Assert.ThrowsException<TargetInvocationException>(
+                    () => m1Info?.Invoke(null, [invalidCase]),
+                    $"_CheckSymbols '{invalidCase}' must throw FormatException"
+                );
+                Assert.IsInstanceOfType<FormatException>(
+                    ex.InnerException,
+                    "_CheckSymbols: FormatException from InnerException"
+                );
+            }
+        }
+
+        [TestMethod]
+        public void _CheckPairsTest()
+        {
+            Type? rnType = typeof(RomanNumber);
+            MethodInfo? m1Info = rnType.GetMethod("_CheckPairs",
+                BindingFlags.NonPublic | BindingFlags.Static);
+
+            string[] validCases = { "IV", "IX", "XL", "XC", "CD", "CM", "MCMLIV", "MMXXIII" };
+            foreach (var validCase in validCases)
+            {
+                m1Info?.Invoke(null, [validCase]);
+            }
+
+            string[] invalidCases = { "IC", "ID", "IM", "XM", "VX", "VL", "VC", "VD", "VM", "LC", "LD", "LM", "DM" };
+            foreach (var invalidCase in invalidCases)
+            {
+                var ex = Assert.ThrowsException<TargetInvocationException>(
+                    () => m1Info?.Invoke(null, [invalidCase]),
+                    $"_CheckPairs '{invalidCase}' must throw FormatException"
+                );
+                Assert.IsInstanceOfType<FormatException>(
+                    ex.InnerException,
+                    "_CheckPairs: FormatException from InnerException"
+                );
+            }
+        }
+
+        [TestMethod]
+        public void _CheckFormatTest()
+        {
+            Type? rnType = typeof(RomanNumber);
+            MethodInfo? m1Info = rnType.GetMethod("_CheckFormat",
+                BindingFlags.NonPublic | BindingFlags.Static);
+            string[] validCases = { "IV", "IX", "XL", "XC", "CD", "CM", "MCMLIV", "MMXXIII", "III", "VIII" };
+            foreach (var validCase in validCases)
+            {
+                m1Info?.Invoke(null, [validCase]);
+            }
+            string[] invalidCases = { "IIII", "XXXX", "CCCC", "MMMM", "VV", "LL", "DD", "IIV", "IIX", "XXL", "XXC", "CCD", "CCM" };
+            foreach (var invalidCase in invalidCases)
+            {
+                var ex = Assert.ThrowsException<TargetInvocationException>(
+                    () => m1Info?.Invoke(null, [invalidCase]),
+                    $"_CheckFormat '{invalidCase}' must throw FormatException"
+                );
+                Assert.IsInstanceOfType<FormatException>(
+                    ex.InnerException,
+                    "_CheckFormat: FormatException from InnerException"
+                );
+            }
+        }
+
+        [TestMethod]
+        public void _CheckValidityTest()
+        {
+            Type? rnType = typeof(RomanNumber);
+            MethodInfo? m1Info = rnType.GetMethod("_CheckValidity",
+                BindingFlags.NonPublic | BindingFlags.Static);
+
+            // Assert Not Throws
+            m1Info?.Invoke(null, ["IX"]);
+
+            String[] testCases = ["IXIX", "IXX", "IVIV", "XCC", "IXIV", "XCXL", "CMCD"];
+            foreach (var testCase in testCases)
+            {
+                var ex = Assert.ThrowsException<TargetInvocationException>(
+                () => m1Info?.Invoke(null, [testCase]),
+                    $"_CheckValidity '{testCase}' must throw FormatException"
+                );
+                Assert.IsInstanceOfType<FormatException>(
+                    ex.InnerException,
+                    "_CheckValidity: FormatException from InnerException"
+                );
+            }
+        }
 
         //[TestMethod]
         //public void TestParseI()
