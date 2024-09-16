@@ -160,160 +160,100 @@ namespace Test
         [TestMethod]
         public void ParseTest()
         {
-            var testCases = new Dictionary<string, int>()
+            var Assert_ThrowsException_Methods = typeof(Assert).GetMethods().Where(x => x.Name == "ThrowsException").Where(x => x.IsGenericMethod);
+            var Assert_ThrowsException_Method = Assert_ThrowsException_Methods.Skip(3).FirstOrDefault();
+
+            TestCase[] testCases1 = [
+                new(){Source ="N", Value = 0},
+                new(){Source ="I", Value = 1},
+                new(){Source ="II", Value = 2},
+                new(){Source ="III", Value = 3},
+                new(){Source ="IV", Value = 4},
+                new(){Source ="V", Value = 5},
+                new(){Source ="VI", Value = 6},
+                new(){Source ="VII", Value = 7},
+                new(){Source ="VIII", Value = 8},
+                new(){Source ="D", Value = 500},
+                new(){Source ="CM", Value = 900},
+                new(){Source ="M", Value = 1000},
+                new(){Source ="MC", Value = 1100},
+                new(){Source ="MCM", Value = 1900},
+                new(){Source ="MM", Value = 2000},
+            ];
+
+            foreach (TestCase testCase in testCases1)
             {
-                { "N",      0 },
-                { "I",      1 },
-                { "II",     2 },
-                { "III",    3 },
-                { "IV",     4 },
-                { "V",      5 },
-                { "VI",     6 },
-                { "VII",    7 },
-                { "VIII",   8 },
-                { "D",      500 },
-                { "CM",     900 },
-                { "M",      1000 },
-                { "MC",     1100 },
-                { "MCM",    1900 },
-                { "MM",     2000 },
+                RomanNumber rn = RomanNumberFactory.Parse(testCase.Source);
+                Assert.IsNotNull(rn);
+                Assert.AreEqual(testCase.Value, rn.Value, $"{testCase.Source} parsing failed. Expected {testCase.Value}, got {rn.Value}.");
+            }
+
+            var formatExceptionType = typeof(FormatException);
+            String part1Template = "Invalid symbol '{0}' in position {1}";
+
+            TestCase[] testCases2 = [
+                new(){Source = "W", ExceptionType = formatExceptionType, ExceptionMessageParts=[String.Format(part1Template, 'W', 0)]},
+                new(){Source = "Q", ExceptionType = formatExceptionType, ExceptionMessageParts=[String.Format(part1Template, 'Q', 0)]},
+                new(){Source = "s", ExceptionType = formatExceptionType, ExceptionMessageParts=[String.Format(part1Template, 's', 0)]},
+                new(){Source = "sX", ExceptionType = formatExceptionType, ExceptionMessageParts=[String.Format(part1Template, 's', 0)]},
+                new(){Source = "Xd", ExceptionType = formatExceptionType, ExceptionMessageParts=[String.Format(part1Template, 'd', 1)]},
+            ];
+
+            foreach (TestCase testCase in testCases2)
+            {
+                dynamic? ex = Assert_ThrowsException_Method?.MakeGenericMethod(testCase.ExceptionType!)
+                    .Invoke(null, [() => RomanNumberFactory.Parse(testCase.Source), $"Parse('{testCase.Source}') must throw FormatException"]);
+                Assert.IsTrue(ex!.Message.Contains(testCase.ExceptionMessageParts!.First()),
+                    $"Parse('{testCase.Source}') FormatException must contain '{testCase.ExceptionMessageParts!.First()}'");
+            }
+
+            TestCase[] testCases3 = {
+                new() { Source = "IM",  ExceptionMessageParts = new[] { "Invalid order 'I' before 'M' in position 0" }, ExceptionType = formatExceptionType },
+                new() { Source = "XIM", ExceptionMessageParts = new[] { "Invalid order 'I' before 'M' in position 1" }, ExceptionType = formatExceptionType },
+                new() { Source = "IMX", ExceptionMessageParts = new[] { "Invalid order 'I' before 'M' in position 0" }, ExceptionType = formatExceptionType },
+                new() { Source = "XMD", ExceptionMessageParts = new[] { "Invalid order 'X' before 'M' in position 0" }, ExceptionType = formatExceptionType },
+                new() { Source = "XID", ExceptionMessageParts = new[] { "Invalid order 'I' before 'D' in position 1" }, ExceptionType = formatExceptionType },
+                new() { Source = "VX",  ExceptionMessageParts = new[] { "Invalid order 'V' before 'X' in position 0" }, ExceptionType = formatExceptionType },
+                new() { Source = "VL",  ExceptionMessageParts = new[] { "Invalid order 'V' before 'L' in position 0" }, ExceptionType = formatExceptionType },
+                new() { Source = "LC",  ExceptionMessageParts = new[] { "Invalid order 'L' before 'C' in position 0" }, ExceptionType = formatExceptionType },
+                new() { Source = "DM",  ExceptionMessageParts = new[] { "Invalid order 'D' before 'M' in position 0" }, ExceptionType = formatExceptionType }
             };
 
-            foreach (var testCase in testCases)
+            foreach (var testCase in testCases3)
             {
-                RomanNumber rn = RomanNumberFactory.Parse(testCase.Key);
-                Assert.IsNotNull(rn);
-                Assert.AreEqual(testCase.Value
-                    ,
-                    rn.Value,
-                    $"{testCase.Key} parsing failed. Expected {testCase.Value}, got {rn.Value}."
+                var ex = Assert.ThrowsException<FormatException>(
+                    () => RomanNumberFactory.Parse(testCase.Source),
+                    $"Parse '{testCase.Source}' must throw FormatException"
+                );
+                Assert.IsTrue(
+                    ex.Message.Contains(testCase.ExceptionMessageParts!.First()),
+                    "FormatException must contain data about mis-ordered symbols and its position"
                 );
             }
-            //Dictionary<String, int> romanMap = new()
-            //{
-            //    {"N", 0},
-            //    {"I", 1},
-            //    {"II", 2},
-            //    {"III", 3},
-            //    {"IIII", 4},
-            //    {"IV", 4},
-            //    {"V", 5},
-            //    {"VI", 6},
-            //    {"VII", 7},
-            //    {"VIII", 8},
-            //    {"VIIII", 9},
-            //    {"IX", 9},
-            //    {"X", 10},
-            //    {"XI", 11},
-            //    {"XII", 12},
-            //    {"XIII", 13},
-            //    {"XIIII", 14},
-            //    {"XIV", 14},
-            //    {"XV", 15},
-            //    {"XVI", 16},
-            //    {"XX", 20},
-            //    {"XXX", 30},
-            //    {"XL", 40},
-            //    {"XXXX", 40},
-            //    {"L", 50},
-            //    {"LX", 60},
-            //    {"LXXXX", 90},
-            //    {"XC", 90},
-            //    {"C", 100},
-            //    {"CC", 200},
-            //    {"CCC", 300},
-            //    {"CD", 400},
-            //    {"D", 500},
-            //    {"DC", 600},
-            //    {"DCCC", 800},
-            //    {"CM", 900},
-            //    {"M", 1000},
-            //    {"MC", 1100},
-            //    {"MCM", 1900},
-            //    {"MM", 2000},
-            //    {"MMM", 3000},
-            //    {"MMMM", 4000}
-            //};
-            //foreach (var test in romanMap)
-            //{
-            //    RomanNumber rn = RomanNumber.Parse(test.Key);
-            //    Assert.IsNotNull(rn);
-            //    Assert.AreEqual(test.Value, rn.Value, $"{test.Key} -> {test.Value}");
-            //}
+            TestCase[] testCases4 = {
+                new() { Source = "IXIX", ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "IXX",  ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "IXIV", ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "XCXC", ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "CMM",  ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "CMCD", ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "XCXL", ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "XCC",  ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType },
+                new() { Source = "XCCI", ExceptionMessageParts = new[] { "Invalid" }, ExceptionType = formatExceptionType }
+            };
 
-
-            //Dictionary<string, (char, int)[]> exTestCases = new()
-            //{
-            //    {"W", new[] {('W', 0)}},
-            //    {"Q", new[] {('Q', 0)}},
-            //    {"s", new[] {('s', 0)}},
-            //    {"Xd", new[] {('d', 1)}},
-            //    {"SWXF", new[] { ('S', 0), ('W', 1), ('F', 3) }},
-            //    {"AIXL", new[] { ('A', 0) }},
-            //    {"MMQ", new[] { ('Q', 2) }},
-            //    {"XDDX", new[] { ('D', 1), ('D', 2) }},
-            //    {"YIYV", new[] { ('Y', 0), ('Y', 2) }},
-            //};
-            //foreach (var testCase in exTestCases)
-            //{
-            //    var ex = Assert.ThrowsException<FormatException>(
-            //        () => RomanNumber.Parse(testCase.Key),
-            //        $"{nameof(FormatException)} Parse '{testCase.Key}' must throw"
-            //    );
-            //    foreach (var (symbol, position) in testCase.Value)
-            //    {
-            //        Assert.IsTrue(ex.Message.Contains($"Invalid symbol '{symbol}' in position {position}"),
-            //            $"{nameof(FormatException)} must contain data about symbol '{symbol}' at position {position}. " +
-            //            $"TestCase: '{testCase.Key}', ex.Message: '{ex.Message}'"
-            //        );
-            //    }
-            //}
-            //Dictionary<String, Object[]> invalidOrderTestCases = new()
-            //{
-            //    { "IM",  ['I', 'M', 0] },
-            //    { "XIM", ['I', 'M', 1] },
-            //    { "IMX", ['I', 'M', 0] },
-            //    { "XMD", ['X', 'M', 0] },
-            //    { "XID", ['I', 'D', 1] },
-            //    { "ID", ['I', 'D', 0] },
-            //    { "VX", ['V', 'X', 0] },
-            //    { "LC", ['L', 'C', 0] },
-            //    { "VV", ['V', 'V', 0] },
-            //    { "LL", ['L', 'L', 0] }
-            //};
-
-            //foreach (var testCase in invalidOrderTestCases)
-            //{
-            //    var ex = Assert.ThrowsException<FormatException>(
-            //        () => RomanNumber.Parse(testCase.Key),
-            //        $"{nameof(FormatException)} Parse '{testCase.Key}' must throw"
-            //    );
-            //    Assert.IsTrue(
-            //        ex.Message.Contains($"Invalid order '{testCase.Value[0]}' before '{testCase.Value[1]}' in position {testCase.Value[2]}"),
-            //        $"FormatException must contain data about mis-ordered symbols. TestCase: '{testCase.Key}', ex.Message: '{ex.Message}'"
-            //    );
-            //}
-
-            //String[] exTestCases3 =
-            //{
-            //    "IXC", "IIX", "VIX",
-            //    "IIXC", "IIIX", "VIIX",
-            //    "VIXC", "IVIX", "CVIIX",
-            //    "IXCC", "IXCM", "IXXC",
-            //};
-
-            //foreach (var testCase in exTestCases3)
-            //{
-            //    var ex = Assert.ThrowsException<FormatException>(
-            //       () => RomanNumber.Parse(testCase),
-            //        $"{nameof(FormatException)} Parse '{testCase}' must throw"
-            //    );
-            //    Assert.IsTrue(ex.Message.Contains(nameof(RomanNumber)) &&
-            //                  ex.Message.Contains(nameof(RomanNumber.Parse)) &&
-            //                  ex.Message.Contains($"invalid sequence: more than 1 less digit before '{testCase[^1]}'"),
-            //                  $"ex.Message must contain info about origin, cause and data. {ex.Message}");
-            //}
-
+            foreach (TestCase testCase in testCases4)
+            {
+                var ex = Assert.ThrowsException<FormatException>(
+                    () => RomanNumberFactory.Parse(testCase.Source),
+                    $"Parse('{testCase.Source}') must throw FormatException"
+                );
+                foreach (var part in testCase.ExceptionMessageParts!)
+                {
+                    Assert.IsTrue(ex.Message.Contains(part),
+                        $"Parse('{testCase.Source}') FormatException must contain '{part}'. Actual message: {ex.Message}");
+                }
+            }
         }
 
         //[TestMethod]
@@ -459,4 +399,12 @@ namespace Test
         //    }
         //}
     }
+}
+
+class TestCase
+{
+    public String Source { get; set; }
+    public int? Value { get; set; }
+    public Type? ExceptionType { get; set; }
+    public IEnumerable<String>? ExceptionMessageParts { get; set; }
 }
