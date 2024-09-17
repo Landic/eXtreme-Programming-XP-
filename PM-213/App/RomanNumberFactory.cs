@@ -19,12 +19,10 @@ namespace App
 
             _CheckValidity(input);
 
-
             foreach (char c in input.Reverse())
             {
                 int digit = DigitValue(c.ToString());
-
-                value += digit >= rightDigit ? digit : -digit;
+                value += (digit >= rightDigit) ? digit : -digit;
                 rightDigit = digit;
             }
             return value;
@@ -32,14 +30,14 @@ namespace App
         public static void _CheckSubs(string input)
         {
             HashSet<char> subs = [];
-            for (int i = 0; i < input.Length - 1; i++)
+            for (int i = 0; i < input.Length - 1; ++i)
             {
                 char c = input[i];
                 if (DigitValue(c.ToString()) < DigitValue(input[i + 1].ToString()))
                 {
                     if (subs.Contains(c))
                     {
-                        throw new FormatException();
+                        throw new FormatException($"{input} Invalid");
                     }
                     subs.Add(c);
                 }
@@ -47,7 +45,6 @@ namespace App
         }
         private static void _CheckValidity(string input)
         {
-            _CheckSequence(input);
             _CheckSymbols(input);
             _CheckPairs(input);
             _CheckFormat(input);
@@ -59,14 +56,14 @@ namespace App
             {
                 int rightDigit = DigitValue(input[i + 1].ToString());
                 int leftDigit = DigitValue(input[i].ToString());
-
                 if (leftDigit != 0 &&
                     leftDigit < rightDigit &&
-                    (rightDigit / leftDigit > 10 ||
-                    (leftDigit == 5 || leftDigit == 50 || leftDigit == 500)
+                    (rightDigit / leftDigit > 10 ||  // IC IM
+                        (leftDigit == 5 || leftDigit == 50 || leftDigit == 500)   // VX
                     ))
                 {
-                    throw new FormatException($"Invalid order '{input[i]}' before '{input[i + 1]}' in position {i}");
+                    throw new FormatException(
+                        $"Invalid order '{input[i]}' before '{input[i + 1]}' in position {i}");
                 }
             }
 
@@ -76,27 +73,27 @@ namespace App
             int maxDigit = 0;
             bool wasLess = false;
             bool wasMax = false;
-
             foreach (char c in input.Reverse())
             {
                 int digit = DigitValue(c.ToString());
-
-                if (digit < maxDigit)
+                if (digit < maxDigit)   
                 {
-                    if (wasLess || wasMax)
+                    if (wasLess || wasMax)  
                     {
-                        throw new FormatException(input);
+                        throw new FormatException($"{input} Invalid");
                     }
                     wasLess = true;
                 }
                 else if (digit == maxDigit)
                 {
                     wasMax = true;
+                    wasLess = false;
                 }
                 else
                 {
                     maxDigit = digit;
                     wasLess = false;
+                    wasMax = false;
                 }
             }
         }
@@ -111,33 +108,10 @@ namespace App
                 }
                 catch
                 {
-                    throw new FormatException($"Invalid symbol '{c}' in position {pos}");
+                    throw new FormatException(
+                        $"Parse('{input}') error: Invalid symbol '{c}' in position {pos}");
                 }
                 pos += 1;
-            }
-
-        }
-        private static void _CheckSequence(string input)
-        {
-            int digit = 0;
-            int rightDigit = 0;
-            int previousDigit = 0;
-
-            foreach (char c in input.Reverse())
-            {
-                try
-                {
-                    digit = DigitValue(c.ToString());
-                }
-                catch (ArgumentException ex) { }
-
-                if (previousDigit > 0 && digit <= rightDigit && digit < previousDigit)
-                {
-                    throw new FormatException($"Invalid numeral sequence: {c} is smaller than both {rightDigit} and {previousDigit}");
-                }
-
-                previousDigit = rightDigit;
-                rightDigit = digit;
             }
         }
 
@@ -151,7 +125,7 @@ namespace App
             "C" => 100,
             "D" => 500,
             "M" => 1000,
-            _ => throw new ArgumentException($"{nameof(RomanNumber)}::{nameof(DigitValue)}: 'digit' has invalid value '{digit}'")
+            _ => throw new ArgumentException($"{nameof(RomanNumberFactory)}::{nameof(DigitValue)}: 'digit' has invalid value '{digit}'")
         };
 
     }
